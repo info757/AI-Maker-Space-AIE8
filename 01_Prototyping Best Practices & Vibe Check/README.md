@@ -37,15 +37,15 @@ You will be required to submit a link to your GitHub, as well as screenshots of 
 Please evaluate your system on the following questions:
 
 1. Explain the concept of object-oriented programming in simple terms to a complete beginner. 
-    - Aspect Tested:
+    - Aspect Tested: This tests the apps ability to take something complex and simplify it for a beginner. It's super innteresting that the 'coding expert' personality in my app gave a complex answer for someone that understands code. The 'therapist' personality gave a much easier explanation appropriate for a beginner.
 2. Read the following paragraph and provide a concise summary of the key points…
-    - Aspect Tested:
+    - Aspect Tested: This tested the ability to ingest outside material and break it down for the user.
 3. Write a short, imaginative story (100–150 words) about a robot finding friendship in an unexpected place.
-    - Aspect Tested:
+    - Aspect Tested: Testing the ability of the AI to take parameters and build a creative story around those constraints. The 'creative writer' personality did a super job compared to the 'coding expert' and 'medical advice' personalities. 
 4. If a store sells apples in packs of 4 and oranges in packs of 3, how many packs of each do I need to buy to get exactly 12 apples and 9 oranges?
-    - Aspect Tested:
+    - Aspect Tested: Testing math. Interestingly the 'therapist' gave the clearest explanation using less mathematical symbols but more words. 'Coding Expert' naturally used more symbols to model the problem.
 5. Rewrite the following paragraph in a professional, formal tone…
-    - Aspect Tested:
+    - Aspect Tested: Testing ability to understand tone and semantics and achieve a good result based on the 'professional, formal tone' prompt. The'helpful assistant' was very formal and the 'therapist' was more human and less robotic. Super cool!
 
 This "vibe check" now serves as a baseline, of sorts, to help understand what holes your application has.
 
@@ -58,7 +58,7 @@ This "vibe check" now serves as a baseline, of sorts, to help understand what ho
 #### ❓Question #1:
 
 What are some limitations of vibe checking as an evaluation tool?
-##### ✅ Answer:
+##### ✅ Answer: Vibe checking is informal and non-comprehensive and serves as a first look to make sure the system isn't suffering obvious and severe failures. it can sometimes be subjective when evaluaitng UI/UX and it doesn't necessarily use quantifiable data.
 
 ### 🚧 Advanced Build (OPTIONAL):
 
