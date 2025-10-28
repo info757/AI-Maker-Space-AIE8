@@ -59,7 +59,7 @@ def helpfulness_node(state: AgentState) -> Dict[str, Any]:
   {final_response}"""
 
     helpfulness_prompt_template = PromptTemplate.from_template(prompt_template)
-    helpfulness_check_model = get_chat_model(model_name="gpt-4.1-mini")
+    helpfulness_check_model = get_chat_model()
     helpfulness_chain = (
         helpfulness_prompt_template | helpfulness_check_model | StrOutputParser()
     )
@@ -84,7 +84,7 @@ def helpfulness_decision(state: AgentState):
     last = state["messages"][-1]
     text = getattr(last, "content", "")
     if "HELPFULNESS:Y" in text:
-        return "end"
+        return END
     return "continue"
 
 
@@ -104,7 +104,7 @@ def build_graph():
     graph.add_conditional_edges(
         "helpfulness",
         helpfulness_decision,
-        {"continue": "agent", "end": END, END: END},
+        {"continue": "agent", END: END},
     )
     graph.add_edge("action", "agent")
     return graph
