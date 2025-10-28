@@ -39,7 +39,32 @@ Run the repository and complete the following:
 Compare the `agent` and `agent_helpful` assistants defined in `langgraph.json`. Where does the helpfulness evaluator fit in the graph, and under what condition should execution route back to the agent vs. terminate?
 
 ##### ✅ Answer:
-_(enter answer here)_
+
+**Comparison of `agent` vs `agent_helpful` assistants:**
+
+The key difference is in their graph structure and execution flow:
+
+**`agent` (simple_agent):**
+- **Graph Flow**: `agent` → `action` (if tool calls) → `agent` → END
+- **Routing Logic**: Only checks if the last message contains tool calls
+- **Termination**: Ends immediately after the agent responds (if no tool calls needed)
+
+**`agent_helpful` (agent_with_helpfulness):**
+- **Graph Flow**: `agent` → `action` (if tool calls) → `agent` → `helpfulness` → `agent` (if not helpful) → END
+- **Routing Logic**: After agent responds, routes to helpfulness evaluator instead of ending
+- **Helpfulness Evaluator**: Uses a separate LLM call to evaluate if the response adequately addresses the original query
+- **Loop Control**: Has a safety limit (10 messages) to prevent infinite loops
+
+**Where the helpfulness evaluator fits:**
+The helpfulness evaluator sits between the agent's response and the final termination. It acts as a quality gate that:
+1. Compares the agent's final response against the original user query
+2. Uses a separate model (gpt-4.1-mini) to make a Y/N decision
+3. Routes back to the agent if the response is deemed unhelpful (N)
+4. Terminates if the response is helpful (Y) or if the loop limit is exceeded
+
+**Execution routing conditions:**
+- **Route back to agent**: When helpfulness evaluator returns "N" (not helpful)
+- **Terminate**: When helpfulness evaluator returns "Y" (helpful) OR when loop limit (10 messages) is exceeded
 
 #### 🏗️ Activity #1 Debugging A Graph
 
@@ -50,7 +75,46 @@ Select the `agent_with_helpfulness` and set one or more interrupts (at least one
 What are your thoughts on when you would use a Before interrupt vs. an After interrupt?
 
 ##### ✅ Answer:
-_(enter answer here)_
+
+**Before Interrupts** are most useful when you want to:
+
+1. **Inspect and validate inputs** before a node processes them
+   - Check if the data format is correct
+   - Verify that required fields are present
+   - Debug why a node might be receiving unexpected data
+
+2. **Modify inputs** before expensive operations
+   - Clean or transform data before processing
+   - Add missing context or parameters
+   - Prevent errors by fixing data issues
+
+3. **Debug node failures** by examining what caused them
+   - See the exact state that led to an error
+   - Understand the data flow before a problematic node
+
+**After Interrupts** are most useful when you want to:
+
+1. **Inspect and validate outputs** after a node completes
+   - Verify that the node produced expected results
+   - Check the quality or format of outputs
+   - Debug why downstream nodes might be failing
+
+2. **Modify outputs** before they're passed to the next node
+   - Clean up or reformat responses
+   - Add additional context or metadata
+   - Override decisions (like changing a "N" to "Y" in helpfulness evaluation)
+
+3. **Debug unexpected behavior** by examining what a node actually produced
+   - See if the node's logic worked as expected
+   - Understand why the graph is taking a particular path
+
+**Practical Example with `agent_with_helpfulness`:**
+- **Before `helpfulness`**: Inspect the query and response being evaluated
+- **After `helpfulness`**: See the Y/N decision and potentially override it
+- **Before `agent`**: Check what context the agent will work with
+- **After `agent`**: Review the agent's response and potentially modify it
+
+**Key Insight**: Before interrupts help you debug **input problems**, while After interrupts help you debug **output problems** or **modify the execution flow**.
 
 
 
