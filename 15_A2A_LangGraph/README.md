@@ -88,6 +88,24 @@ What are the core components of an `AgentCard`?
 
 ##### ✅ Answer:
 
+The core components of an `AgentCard` (as defined in `app/__main__.py` lines 48-81) include:
+
+1. **name**: Agent identity and display name ("General Purpose Agent")
+2. **description**: Detailed description of what the agent does and its capabilities
+3. **url**: Base URL where the agent is hosted for API access
+4. **version**: Agent version for compatibility tracking and updates
+5. **default_input_modes**: Supported content types for input (e.g., text/plain)
+6. **default_output_modes**: Supported content types for output (e.g., text/plain)
+7. **capabilities**: Feature flags like streaming support and push notifications
+8. **skills**: Array of specific capabilities with:
+   - `id`: Unique identifier for the skill
+   - `name`: Human-readable skill name
+   - `description`: What the skill does
+   - `tags`: Categorization tags
+   - `examples`: Sample queries that use this skill
+
+The AgentCard serves as a standardized interface description that allows other agents to discover, understand, and interact with this agent's capabilities through the A2A protocol.
+
 <br />
 
 ### ❓ Question #2:
@@ -95,6 +113,22 @@ What are the core components of an `AgentCard`?
 Why is A2A (and other such protocols) important in your own words?
 
 ##### ✅ Answer:
+
+A2A (Agent-to-Agent) protocols are crucial for several key reasons:
+
+**1. Standardized Communication**: They provide a common language and interface that allows different AI agents to communicate seamlessly, regardless of their underlying implementation or framework. This eliminates the need for custom integration code for each agent pair.
+
+**2. Discoverability & Composability**: Through standardized AgentCards, agents can discover each other's capabilities and compose complex workflows by chaining multiple specialized agents together. This enables building sophisticated multi-agent systems where each agent handles a specific domain or task.
+
+**3. Quality Assurance**: A2A protocols often include built-in evaluation mechanisms (like the helpfulness loop in this implementation) that ensure responses meet quality standards before being delivered to users. This provides an additional layer of reliability and trust.
+
+**4. Multi-turn Context Preservation**: These protocols maintain conversation context across multiple interactions, enabling natural, flowing conversations that build upon previous exchanges rather than treating each query in isolation.
+
+**5. Interoperability**: They break down silos between different AI systems, allowing organizations to mix and match agents from different vendors or frameworks, creating more flexible and powerful AI ecosystems.
+
+**6. Future-Proofing**: As the AI landscape evolves, standardized protocols ensure that new agents can integrate with existing systems without requiring complete rewrites, protecting investments in AI infrastructure.
+
+In essence, A2A protocols are the foundation for building truly collaborative AI systems where agents can work together as a team, each contributing their specialized capabilities to solve complex problems that no single agent could handle alone.
 
 <br /><br />
 
