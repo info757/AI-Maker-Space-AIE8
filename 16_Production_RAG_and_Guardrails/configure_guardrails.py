@@ -30,7 +30,8 @@ def configure_guardrails(api_key: str):
     import json
     
     config_path = get_config_path()
-    config = {"api_key": api_key}
+    # Try both 'api_key' and 'token' formats as guardrails CLI might expect either
+    config = {"api_key": api_key, "token": api_key}
     
     with open(config_path, "w") as f:
         json.dump(config, f, indent=2)
